@@ -95,5 +95,5 @@ async function login(accountName) {
     return
   }
   const jsonResponse2 = await response2.json()
-  window.location.href = "/greg-testing"
+  window.location.href = "/"
 }
