@@ -61,7 +61,7 @@ async function register(accountName, accountDisplayName) {
     return
   }
   const jsonResponse2 = await response2.json();
-  window.location.href = "/greg-testing"
+  window.location.href = "/"
 }
 
 async function login(accountName) {
