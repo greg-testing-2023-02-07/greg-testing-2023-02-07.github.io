@@ -62,7 +62,7 @@ async function register(accountName, accountDisplayName) {
   }
   const jsonResponse2 = await response2.json();
   console.log(jsonResponse2);
-  // window.location.href = "/"
+  window.location.href = "/"
 }
 
 async function login(accountName) {
@@ -97,5 +97,5 @@ async function login(accountName) {
   }
   const jsonResponse2 = await response2.json()
   console.log(jsonResponse2);
-  // window.location.href = "/"
+  window.location.href = "/"
 }
