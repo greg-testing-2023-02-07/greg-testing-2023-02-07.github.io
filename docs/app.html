@@ -1,0 +1,26 @@
+<html>
+  <head></head>
+  <body>
+    <div>
+      <h1>
+        {{PACT_SERVER_USER_NAME}}
+      </h1>
+    </div>
+
+    <div>
+      <form id="transaction-form">
+        <label for="transaction">Pact code</label>
+        <textarea rows="20" cols="80" id="transaction-input"></textarea>
+        <input type="submit"/>
+      </form>
+    </div>
+    <div>
+      <pre id="transaction-output">Awaiting setup</pre>
+    </div>
+    <div>
+      <a href="/logout">Logout</a>
+    </div>
+    <script src="/index.js"></script>
+    <script src="/transaction.js"></script>
+  </body>
+</html>

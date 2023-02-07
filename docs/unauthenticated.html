@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <script src="/index.js"></script>
+    <script src="/webauthn-json.js"></script>
+  </head>
+  <body>
+    <h1>Test</h1>
+
+    <div>
+      <h2>Register</h2>
+    <form id="register-form">
+      <label for="account-name">Account Name</label>
+      <input type="text" id="account-name"/>
+      <label for="account-display-name">Account Display Name</label>
+      <input type="text" id="account-display-name"/>
+      <input type="submit" id="register-button"/>
+    </form>
+    </div>
+
+    <div>
+      <h2>Login</h2>
+    <form id="login-form">
+      <label for="login-account-name">Account Name</label>
+      <input type="text" id="login-account-name"/>
+      <input type="submit" id="login-button"/>
+    </form>
+    </div>
+    <script src="/auth.js"></script>
+
+  </html>
