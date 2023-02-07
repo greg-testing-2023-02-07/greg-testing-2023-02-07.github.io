@@ -1,0 +1,15 @@
+<html>
+	<head></head>
+	<body>
+		index.html checking whether logged in
+		<script language="javascript">
+			if (document.cookie == "") {
+				alert("empty cookie");
+				window.location.href = "/unauthenticated.html";
+			} else {
+				alert("nonempty cookie");
+				window.location.href = "/app.html"
+			}
+		</script>
+    </body>
+</html>
