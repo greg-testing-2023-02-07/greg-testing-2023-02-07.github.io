@@ -1,1 +1,1 @@
-const pact_server_url = "https://gregtesting4-env.eba-jps9sing.us-east-1.elasticbeanstalk.com"
+const pact_server_url = "https://beanstalk.greg-testing-2023-02-07.com"
