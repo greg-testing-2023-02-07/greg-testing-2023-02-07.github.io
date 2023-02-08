@@ -46,7 +46,7 @@ async function run_transaction(transaction_code, output_element) {
                 nonce: "TODO"
             })
         }),
-        credentials: "same-origin"
+        credentials: "include"
     });
     const resp_json = await response.json();
     output_element.innerHTML = JSON.stringify(resp_json, null, 2);
