@@ -16,9 +16,7 @@ function setup() {
 async function run_transaction(transaction_code, output_element) {
     const response = await fetch(pact_server_url + '/api/v1/tx', {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         cache: 'no-cache',
         body: JSON.stringify({
             hash: "none",
@@ -34,7 +32,7 @@ async function run_transaction(transaction_code, output_element) {
                         code: transaction_code
                     }
                 },
-                signers: [{pubKey: getCookie('public-key')}],
+                signers: [],
                 meta: {
                     creationTime: 0,
                     ttl: 0,
