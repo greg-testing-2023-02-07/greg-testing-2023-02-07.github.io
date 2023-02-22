@@ -1,7 +1,7 @@
 import blake2b from 'blake2b';
 import {encode as arrayBufferToBase64, decode} from 'base64-arraybuffer';
 import { pact_server_url } from './globals';
-import get from './webauthn-json.js';
+import {get} from './webauthn-json.js';
 
 
 async function tx(transactionCode) {
@@ -32,7 +32,7 @@ async function tx(transactionCode) {
         }
     };
     console.log(options);
-    const credential = await navigator.credentials.get(options);
+    const credential = await get(options);
     const signaturePayload = {
         authenticatorData: arrayBufferToBase64(credential.response.authenticatorData),
         clientDataJSON: arrayBufferToBase64(credential.response.clientDataJSON),
