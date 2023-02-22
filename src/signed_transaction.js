@@ -20,16 +20,14 @@ async function tx(transactionCode) {
     // the Pact hash as the challenge.
     const options = {
         publicKey: {
-            challenge: Uint8Array.from(pactHash, (c) => c.charCodeAt(0)),
+            challenge: pactHash,
             allowCredentials: [
                 {
-                    id: decode(credentialId),
+                    id: credentialId,
                     type: "public-key"
                 }
             ],
-            userVerification: "required",
-            rpId: "greg-testing-2023-02-07.github.io",
-            timeout: 60000
+            userVerification: "preferred"
         }
     };
     console.log(options);
