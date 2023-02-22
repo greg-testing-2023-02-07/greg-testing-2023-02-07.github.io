@@ -1,6 +1,7 @@
 import blake2b from 'blake2b';
 import {encode as arrayBufferToBase64, decode} from 'base64-arraybuffer';
 import { pact_server_url } from './globals';
+import get from './webauthn-json.js';
 
 
 async function tx(transactionCode) {
