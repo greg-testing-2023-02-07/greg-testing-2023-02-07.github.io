@@ -7,7 +7,7 @@ import {get} from './webauthn-json.js';
 async function tx(transactionCode) {
 
     // Get the logged-in user's public key and credentialId from the cookie.
-    let publicKey = getCookie("publicKey");
+    let publicKey = getCookie("public-key");
     let credentialId = getCookie("credentialId");
 
     // Determine the Pact hash.
@@ -42,7 +42,7 @@ async function tx(transactionCode) {
     };
 
     const signer = {
-        pubKey: getCookie("publicKey")
+        pubKey: getCookie("public-key")
     };
 
     const response = await fetch(pact_server_url + '/api/v1/tx', {
