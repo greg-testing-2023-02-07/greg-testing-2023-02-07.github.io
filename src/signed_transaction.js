@@ -63,7 +63,7 @@ async function tx(transactionCode) {
                        code: transactionCode
                    }
                },
-               signers: [JSON.stringify(signer)],
+               signers: [signer],
                meta: {
                    creationTime: 0,
                    ttl: 0,
