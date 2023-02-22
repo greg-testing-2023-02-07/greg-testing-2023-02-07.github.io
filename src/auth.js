@@ -41,6 +41,7 @@ export async function register(accountName, accountDisplayName) {
   console.log(JSON.stringify(jsonResponse2));
   document.cookie = "credentialId=" + credential.id;
     console.log("Set cookie");
+  await setup_account_cookies();
 }
 
 export async function login(accountName) {
@@ -80,5 +81,22 @@ export async function login(accountName) {
   console.log(JSON.stringify(jsonResponse2));
   document.cookie = "credentialId=" + credential.id;
     console.log("Login Set cookie");
+  await setup_account_cookies();
+}
 
+async function setup_account_cookies() {
+  console.log("setup_account_cookies");
+  const res = await fetch(pact_server_url + "/api/v1/auth/account-info", { credentials: "include" });
+  if (!res.ok) {
+    alert( await res.text() )
+    return
+  }
+  const accountInfo = await res.json();
+  const publicKey = accountInfo["public-key"];
+  alert(publicKey);
+  console.log("setting public-key cookie to " + publicKey);
+  document.cookie = "public-key=" + publicKey;
+  console.log("setting account-name cookie to " + accountInfo["accountName"]);
+  document.cookie = "account-name=" + accountInfo["accountName"];
+  console.log("finished setup_account_cookies");
 }
