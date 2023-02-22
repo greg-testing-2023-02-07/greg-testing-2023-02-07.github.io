@@ -34,6 +34,7 @@ async function tx(transactionCode) {
     console.log(options);
     const credential = await get(options);
     const resp = credential.response;
+    console.log(credential);
     console.log(resp);
     const signaturePayload = {
         authenticatorData: resp.authenticatorData,
