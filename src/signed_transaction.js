@@ -14,7 +14,7 @@ async function tx(transactionCode) {
     var enc = new TextEncoder;
     var output = new Uint8Array(64); // TODO: Is 64 bytes the right hash length?
     const hash = blake2b(output.length).update(enc.encode(transactionCode)).digest();
-    const pactHash = arrayBufferToBase64(hash);
+    const pactHash = arrayBufferToBase64(hash).replace("/","_").replace("+","-");
 
     console.log("tx");
     // Sign the transaction using the user's webauthn credential by presenting
