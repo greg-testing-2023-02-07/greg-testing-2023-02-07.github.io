@@ -33,10 +33,12 @@ async function tx(transactionCode) {
     };
     console.log(options);
     const credential = await get(options);
+    const resp = credential.response;
+    console.log(resp);
     const signaturePayload = {
-        authenticatorData: arrayBufferToBase64(credential.response.authenticatorData),
-        clientDataJSON: arrayBufferToBase64(credential.response.clientDataJSON),
-        signature: arrayBufferToBase64(credential.response.signature)
+        authenticatorData: arrayBufferToBase64(resp.authenticatorData),
+        clientDataJSON: arrayBufferToBase64(resp.clientDataJSON),
+        signature: arrayBufferToBase64(resp.signature)
     };
 
     const signer = {
