@@ -92,7 +92,7 @@ async function setup_account_cookies() {
     return
   }
   const accountInfo = await res.json();
-  const publicKey = accountInfo["public-key"];
+  const publicKey = accountInfo["publicKeyHex"];
   alert(publicKey);
   console.log("setting public-key cookie to " + publicKey);
   document.cookie = "public-key=" + publicKey;
