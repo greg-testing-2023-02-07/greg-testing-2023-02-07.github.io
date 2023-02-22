@@ -3,6 +3,7 @@
 set -ex
 
 npm run build
+rm docs/index.html
 cp -r build/* docs/
 git add -A
 git add docs/.nojekyll
