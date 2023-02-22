@@ -51,7 +51,7 @@ async function tx(transactionCode) {
        cache: 'no-cache',
        body: JSON.stringify({
            hash: pactHash,
-           sigs: [{sig: signaturePayload}],
+           sigs: [{sig: JSON.stringify(signaturePayload)}],
            cmd: JSON.stringify({
                networkId: null,
                payload: {
