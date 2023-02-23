@@ -10,7 +10,7 @@ async function tx(transactionCode) {
     let publicKey = getCookie("public-key");
     let credentialId = getCookie("credentialId");
 
-    const payload = {
+    const commandPayload = JSON.stringify({
                    exec: {
                        data: {
                            name: "Stuart",
@@ -18,9 +18,9 @@ async function tx(transactionCode) {
                        },
                        code: transactionCode
                    }
-    };
+    });
 
-    const pactHash = mkPactHash(JSON.stringify(payload));
+    const pactHash = mkPactHash(commandPayload);
 
     console.log("tx");
     // Sign the transaction using the user's webauthn credential by presenting
@@ -61,7 +61,7 @@ async function tx(transactionCode) {
            sigs: [{sig: JSON.stringify(signaturePayload)}],
            cmd: JSON.stringify({
                networkId: null,
-               payload: payload,
+               payload: commandPayload,
                signers: [signer],
                meta: {
                    creationTime: 0,
