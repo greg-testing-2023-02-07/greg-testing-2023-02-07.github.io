@@ -10,6 +10,10 @@ async function tx(transactionCode) {
     let publicKey = getCookie("public-key");
     let credentialId = getCookie("credentialId");
 
+    const signer = {
+        pubKey: getCookie("public-key")
+    };
+
     const commandPayload = JSON.stringify({
         networkId: null,
         payload: {
@@ -59,10 +63,6 @@ async function tx(transactionCode) {
         authenticatorData: arrayBufferToBase64(base64urlToBuffer(resp.authenticatorData)),
         clientDataJSON: resp.clientDataJSON,
         signature: arrayBufferToBase64(base64urlToBuffer(resp.signature))
-    };
-
-    const signer = {
-        pubKey: getCookie("public-key")
     };
 
     const response = await fetch(pact_server_url + '/api/v1/tx', {
