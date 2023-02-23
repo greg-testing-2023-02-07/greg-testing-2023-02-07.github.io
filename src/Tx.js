@@ -1,6 +1,6 @@
 // A throwaway Component for calling tx().
 
-import tx from './signed_transaction'
+import { tx } from './signed_transaction'
 import React from 'react';
 
 export default class Tx extends React.Component {

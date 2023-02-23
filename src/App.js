@@ -3,10 +3,15 @@ import './App.css';
 import Register from './Register';
 import Tx from './Tx';
 import preval from 'preval.macro';
+import { mkPactHash, blake2b } from './signed_transaction.js';
 
 const buildTime = preval`module.exports = new Date().toLocaleString();`
 
 function App() {
+  // TODO: temporary reexports.
+  window.blake2b = blake2b;
+  window.mkPactHash = mkPactHash;
+
   return (
     <div className="App">
       <p>Built at {buildTime}</p>

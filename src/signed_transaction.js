@@ -10,11 +10,7 @@ async function tx(transactionCode) {
     let publicKey = getCookie("public-key");
     let credentialId = getCookie("credentialId");
 
-    // Determine the Pact hash.
-    var enc = new TextEncoder;
-    var output = new Uint8Array(64); // TODO: Is 64 bytes the right hash length?
-    const hash = blake2b(output.length).update(enc.encode(transactionCode)).digest();
-    const pactHash = arrayBufferToBase64(hash).replaceAll("/","_").replaceAll("+","-");
+    const pactHash = mkPactHash(transactionCode);
 
     console.log("tx");
     // Sign the transaction using the user's webauthn credential by presenting
@@ -82,6 +78,15 @@ async function tx(transactionCode) {
     return resp_json
 }
 
+function mkPactHash(input) {
+    // Determine the Pact hash.
+    var enc = new TextEncoder;
+    var output = new Uint8Array(64); // TODO: Is 64 bytes the right hash length?
+    const hash = blake2b(output.length).update(enc.encode(input)).digest();
+    const pactHash = arrayBufferToBase64(hash).replaceAll("/","_").replaceAll("+","-");
+    return pactHash
+}
+
 // Thanks to https://stackoverflow.com/questions/10730362/get-cookie-by-name
 function getCookie(name) {
   const value = `; ${document.cookie}`;
@@ -89,4 +94,4 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
-export default tx;
+export { tx, mkPactHash, blake2b };
