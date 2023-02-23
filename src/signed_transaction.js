@@ -11,13 +11,26 @@ async function tx(transactionCode) {
     let credentialId = getCookie("credentialId");
 
     const commandPayload = JSON.stringify({
-                   exec: {
-                       data: {
-                           name: "Stuart",
-                           language: "Pact"
-                       },
-                       code: transactionCode
-                   }
+        networkId: null,
+        payload: {
+            exec: {
+                data: {
+                    name: "Stuart",
+                    language: "Pact"
+                },
+                code: transactionCode
+            }
+        },
+        signers: [signer],
+        meta: {
+            creationTime: 0,
+            ttl: 0,
+            gasLimit: 0,
+            chainId: "",
+            gasPrice: 0,
+            sender: ""
+        },
+        nonce: "TODO"
     });
 
     const pactHash = mkPactHash(commandPayload);
@@ -59,20 +72,7 @@ async function tx(transactionCode) {
        body: JSON.stringify({
            hash: pactHash,
            sigs: [{sig: JSON.stringify(signaturePayload)}],
-           cmd: JSON.stringify({
-               networkId: null,
-               payload: commandPayload,
-               signers: [signer],
-               meta: {
-                   creationTime: 0,
-                   ttl: 0,
-                   gasLimit: 0,
-                   chainId: "",
-                   gasPrice: 0,
-                   sender: ""
-               },
-               nonce: "TODO"
-           })
+           cmd: commandPayload
        }),
        credentials: "include"
     });
