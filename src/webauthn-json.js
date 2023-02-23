@@ -18,4 +18,4 @@ async function get(e){return getResponseToJSON(await navigator.credentials.get(g
 function supported(){return!!(navigator.credentials&&navigator.credentials.create&&navigator.credentials.get&&window.PublicKeyCredential)};
 //# sourceMappingURL=/sm/a51e3f71b78aa9350ae4e471d497a61588cfaa1126a8a052cc430a951a6e823c.map
 
-export { get, create };
+export { get, create, base64urlToBuffer, bufferToBase64url };
