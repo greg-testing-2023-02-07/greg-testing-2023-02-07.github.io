@@ -81,7 +81,7 @@ async function tx(transactionCode) {
 function mkPactHash(input) {
     // Determine the Pact hash.
     var enc = new TextEncoder;
-    var output = new Uint8Array(64); // TODO: Is 64 bytes the right hash length?
+    var output = new Uint8Array(32); // TODO: Is 64 bytes the right hash length?
     const hash = blake2b(output.length).update(enc.encode(input)).digest();
     const pactHash = arrayBufferToBase64(hash).replaceAll("/","_").replaceAll("+","-");
     return pactHash
