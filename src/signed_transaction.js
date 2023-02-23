@@ -65,7 +65,7 @@ async function tx(transactionCode) {
         signature: arrayBufferToBase64(base64urlToBuffer(resp.signature))
     };
 
-    const response = await fetch(pact_server_url + '/api/v1/tx', {
+    const response = await fetch(pact_server_url + '/api/v1/execute', {
        method: "POST",
        headers: { "Content-Type": "application/json" },
        cache: 'no-cache',

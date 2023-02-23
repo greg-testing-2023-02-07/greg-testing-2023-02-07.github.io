@@ -47,7 +47,7 @@ export default class Register extends React.Component {
                 />
                 <label>Account Display Name</label>
                 <input type="text" id="accountDisplayName"/>
-                <input type="submit" id="register-button"/>
+                <input type="submit" id="register-button" value="Register"/>
             </form>
 
             <h2>Login</h2>
@@ -59,8 +59,16 @@ export default class Register extends React.Component {
                  value={this.state.loginAccountName}
                  onChange={this.handleInputChange}
                 />
-                <input type="submit" id="login-button"/>
+                <input type="submit" id="login-button" value="Login"/>
             </form>
+                <div class="flex">
+                    <input type="text" onChange={this.handleInputChange}/>
+                    <div>
+                        <a href="">Register</a>
+                        <span>/</span>
+                        <a href="">Login</a>
+                    </div>
+                </div>
             </div>
         )
     }
