@@ -29,7 +29,7 @@ export default class AdminPanel extends React.Component<{}, { commandCode: strin
                   <button onClick={this.handleSubmit}>Submit</button>
               </div>
               <div>
-                  <pre>{JSON.stringify(this.state.commandResult)}</pre>
+                  <pre>{JSON.stringify(this.state.commandResult,null,2)}</pre>
               </div>
           </>
       )
