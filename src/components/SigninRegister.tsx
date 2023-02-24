@@ -41,6 +41,10 @@ export default class SigninRegister extends React.Component<{}, LoginState> {
 
     async handleLogout(event: any) {
         this.setState({ loggedInAccount: undefined, loggedInPublicKey: undefined});
+        const res = await fetch(pact_server_url + "/api/v1/auth/logout", { credentials: "include" });
+        if (!res.ok) {
+            throw new Error(await res.text());
+        }
     }
 
     render() {
