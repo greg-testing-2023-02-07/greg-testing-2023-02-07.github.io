@@ -53,7 +53,7 @@ export default class SigninRegister extends React.Component<{}, LoginState> {
                   <div className="flex flex-row text-xs items-center">
                     <a href="" onClick={async (e) => {this.handleRegister(e)}}>Register</a>
                     <span>/</span>
-                    <a href="" onClick={async (e) => {this.handleLogin(e)}}>Signin</a>
+                    <a href="" onClick={async (e) => {this.handleLogin(e)}}>Signin.</a>
                   </div>
               </div>
               <div className="flex-col" hidden={this.state.loggedInAccount? false: true}>
