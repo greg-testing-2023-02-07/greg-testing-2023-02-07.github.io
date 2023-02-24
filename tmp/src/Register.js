@@ -1,6 +1,5 @@
 import React from 'react';
 import {register, login} from './auth.js';
-import blake2b from 'blake2b';
 
 export default class Register extends React.Component {
     constructor(props) {

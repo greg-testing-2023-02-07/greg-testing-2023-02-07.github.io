@@ -2,9 +2,9 @@
 
 set -ex
 
-npm run build
+npm run export
 rm docs/index.html
-cp -r build/* docs/
+cp -r out/* docs/
 git add -A
 git commit -m "update"
 git push origin main
