@@ -58,7 +58,7 @@ export default class SigninRegister extends React.Component<{}, LoginState> {
               </div>
               <div className="flex-col" hidden={this.state.loggedInAccount? false: true}>
                   <p>{this.state.loggedInAccount}</p>
-                  <p>{this.state.loggedInPublicKey}</p>
+                  <p className="text-ellipsis">{this.state.loggedInPublicKey}</p>
                   <a href="" onClick={async (e) => {this.handleLogout(e)}}>Logout</a>
               </div>
           </>
