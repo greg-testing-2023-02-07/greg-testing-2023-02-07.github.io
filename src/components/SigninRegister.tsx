@@ -33,6 +33,7 @@ export default class SigninRegister extends React.Component<{}, LoginState> {
     }
 
     async handleLogin(event: MouseEvent<HTMLAnchorElement>) {
+        alert("login, prevent default");
         event.preventDefault();
         const {accountName, pubKey} = await login(this.state.accountNameForm);
         this.setState({ loggedInAccount: accountName, loggedInPublicKey: pubKey });
@@ -52,7 +53,7 @@ export default class SigninRegister extends React.Component<{}, LoginState> {
                   <div className="flex flex-row text-xs items-center">
                     <a href="" onClick={async (e) => {this.handleRegister(e)}}>Register</a>
                     <span>/</span>
-                    <a href="">Sign In</a>
+                    <a href="" onClick={async (e) => {this.handleLogin(e)}}>Sign In</a>
                   </div>
               </div>
               <div className="flex-col" hidden={this.state.loggedInAccount? false: true}>
