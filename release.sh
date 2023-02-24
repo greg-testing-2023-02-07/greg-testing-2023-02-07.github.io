@@ -2,6 +2,7 @@
 
 set -ex
 
+npm run build
 npm run export
 mkdir -p docs
 touch docs/index.html
