@@ -33,7 +33,6 @@ export default class SigninRegister extends React.Component<{}, LoginState> {
     }
 
     async handleLogin(event: MouseEvent<HTMLAnchorElement>) {
-        alert("login, prevent default");
         event.preventDefault();
         const {accountName, pubKey} = await login(this.state.accountNameForm);
         this.setState({ loggedInAccount: accountName, loggedInPublicKey: pubKey });
@@ -80,6 +79,8 @@ async function register(accountName: string): Promise<{accountName: string, pubK
       accountDisplayName: accountName,
     }),
     credentials: "include"
+  }).catch((error) => {
+      return error
   });
 
   if (! response.ok) {

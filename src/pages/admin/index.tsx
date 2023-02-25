@@ -1,5 +1,6 @@
 import React, { ChangeEvent, MouseEvent } from 'react';
 import { tx } from "../../utils/signed_transaction";
+import styles from '@/styles/Home.module.css'
 
 
 export default class AdminPanel extends React.Component<{}, { commandCode: string, commandResult: any }> {
@@ -11,7 +12,7 @@ export default class AdminPanel extends React.Component<{}, { commandCode: strin
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+    handleInputChange(e: ChangeEvent<HTMLTextAreaElement>) {
         this.setState({ commandCode: e.target.value })
     }
 
@@ -23,14 +24,24 @@ export default class AdminPanel extends React.Component<{}, { commandCode: strin
     render() {
       return(
           <>
-              <p>AdminPanel</p>
-              <div>
-                  <input type="textarea" onChange={this.handleInputChange}/>
-                  <button onClick={this.handleSubmit}>Submit</button>
-              </div>
-              <div>
-                  <pre>{JSON.stringify(this.state.commandResult,null,2)}</pre>
-              </div>
+              <main className={styles.main}>
+                  <div className="grid grid-rows-1 grid-cols-2">
+                    <div className="flex flex-col">
+                        <textarea
+                            rows={16}
+                            cols={40}
+                            className="p-1 m-1"
+                            onChange={this.handleInputChange}/>
+                        <div className="flex flex-row">
+                            <button className="rouded-full bg-white shadow-lg p-1 max-w-sm mx-auto" onClick={this.handleSubmit}>Send</button>
+                            <button className="rouded-full bg-white shadow-lg p-1 max-w-sm mx-auto" onClick={this.handleSubmit}>Sign & Send</button>
+                        </div>
+                    </div>
+                    <div className="p-1 m-1 bg-white">
+                        <pre>{JSON.stringify(this.state.commandResult,null,2)}</pre>
+                    </div>
+                  </div>
+              </main>
           </>
       )
     }
