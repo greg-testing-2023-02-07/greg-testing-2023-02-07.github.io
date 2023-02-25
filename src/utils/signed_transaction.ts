@@ -73,7 +73,7 @@ async function tx(transactionCode: string, sign: boolean): Promise<any> {
 
     // sigs will be set to the webauthn-derived signature if the function was
     // called with `sigs`=true. Otherwise, we leave it empty.
-    const sigs = sign ? { sig: JSON.stringify(signaturePayload) } : [];
+    const sigs = sign ? [{ sig: JSON.stringify(signaturePayload) }] : [];
 
     const response = await fetch(pact_server_url + '/api/v1/execute', {
        method: "POST",
