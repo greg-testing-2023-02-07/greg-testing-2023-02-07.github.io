@@ -85,7 +85,7 @@ async function tx(transactionCode: string, sign: boolean): Promise<any> {
            cmd: commandPayload
        }),
        credentials: "include"
-    });
+    }).catch((error) => {return (error);});
     const resp_json = await response.json();
     return resp_json
 }
