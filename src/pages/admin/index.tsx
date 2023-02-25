@@ -16,8 +16,8 @@ export default class AdminPanel extends React.Component<{}, { commandCode: strin
         this.setState({ commandCode: e.target.value })
     }
 
-    async handleSubmit(_: MouseEvent<HTMLButtonElement>) {
-        const resp = await tx(this.state.commandCode);
+    async handleSubmit(_: MouseEvent<HTMLButtonElement>, sign: boolean) {
+        const resp = await tx(this.state.commandCode, sign);
         this.setState({ commandResult: resp })
     }
 
@@ -33,8 +33,12 @@ export default class AdminPanel extends React.Component<{}, { commandCode: strin
                             className="p-1 m-1"
                             onChange={this.handleInputChange}/>
                         <div className="flex flex-row">
-                            <button className="rouded-full bg-white shadow-lg p-1 max-w-sm mx-auto" onClick={this.handleSubmit}>Send</button>
-                            <button className="rouded-full bg-white shadow-lg p-1 max-w-sm mx-auto" onClick={this.handleSubmit}>Sign & Send</button>
+                            <button
+                                className="rouded-full bg-white shadow-lg p-1 max-w-sm mx-auto"
+                                onClick={async (e) => {this.handleSubmit(e,false)}}>Send</button>
+                            <button
+                                className="rouded-full bg-white shadow-lg p-1 max-w-sm mx-auto"
+                                onClick={async (e) => {this.handleSubmit(e,true)}}>Sign & Send</button>
                         </div>
                     </div>
                     <div className="p-1 m-1 bg-white">
