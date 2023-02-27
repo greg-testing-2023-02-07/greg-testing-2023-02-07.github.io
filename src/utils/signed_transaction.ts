@@ -26,7 +26,8 @@ async function tx(transactionCode: string, sign: boolean): Promise<any> {
             exec: {
                 data: {
                     name: "Stuart",
-                    language: "Pact"
+                    language: "Pact",
+                    sessionKeyset: getCookie("public-key")
                 },
                 code: transactionCode
             }

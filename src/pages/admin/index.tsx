@@ -34,14 +34,14 @@ export default class AdminPanel extends React.Component<{}, { commandCode: strin
                             onChange={this.handleInputChange}/>
                         <div className="flex flex-row">
                             <button
-                                className="rouded-full bg-current dark:bg-slate-800 shadow-lg p-1 max-w-sm mx-auto"
+                                className="rouded-full bg-white dark:bg-slate-800 shadow-lg p-1 max-w-sm mx-auto"
                                 onClick={async (e) => {this.handleSubmit(e,false)}}>Send</button>
                             <button
-                                className="rouded-full bg-current dark:bg-slate-800 shadow-lg p-1 max-w-sm mx-auto"
+                                className="rouded-full bg-white dark:bg-slate-800 shadow-lg p-1 max-w-sm mx-auto"
                                 onClick={async (e) => {this.handleSubmit(e,true)}}>Sign & Send</button>
                         </div>
                     </div>
-                    <div className="p-1 m-1 bg-current text-xs dark:bg-slate-800">
+                    <div className="p-1 m-1 bg-white text-xs dark:bg-slate-800">
                         <pre>{JSON.stringify(this.state.commandResult,null,2)}</pre>
                     </div>
                   </div>
