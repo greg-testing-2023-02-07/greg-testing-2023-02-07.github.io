@@ -30,9 +30,12 @@ export default class SigninRegister extends React.Component<{}, LoginState> {
     async handleRegister(event: MouseEvent<HTMLAnchorElement>) {
         event.preventDefault();
         const {accountName, pubKey} = await register(this.state.accountNameForm);
+        this.setState({ loggedInAccount: accountName, loggedInPublicKey: pubKey });
+
+        // TODO: This will fail for fresh installs of pact-server, when the
+        // posts module has not not yet been installed.
         let res = await tx("(posts.create-account {accountName} (read-keyset \"sessionKeyset\" \"tmp.jpg\"))", false);
         console.log(res);
-        this.setState({ loggedInAccount: accountName, loggedInPublicKey: pubKey });
     }
 
     async handleLogin(event: MouseEvent<HTMLAnchorElement>) {
