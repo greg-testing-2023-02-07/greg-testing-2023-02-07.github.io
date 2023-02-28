@@ -1,6 +1,7 @@
 import React, { ChangeEvent, MouseEvent } from 'react';
 
 import {get, create} from '../utils/webauthn-json.js';
+import { tx } from "../utils/signed_transaction";
 import { pact_server_url } from '../utils/globals';
 
 // TODO: At construction time, check for the auth-token in the cookie,
@@ -29,6 +30,8 @@ export default class SigninRegister extends React.Component<{}, LoginState> {
     async handleRegister(event: MouseEvent<HTMLAnchorElement>) {
         event.preventDefault();
         const {accountName, pubKey} = await register(this.state.accountNameForm);
+        let res = await tx("(posts.create-account {accountName} (read-keyset \"sessionKeyset\" \"tmp.jpg\"))", false);
+        console.log(res);
         this.setState({ loggedInAccount: accountName, loggedInPublicKey: pubKey });
     }
 

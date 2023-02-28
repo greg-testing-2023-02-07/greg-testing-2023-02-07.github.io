@@ -8,6 +8,12 @@
 
   (deftable accounts:{account-schema})
 
+  (defschema post-schema
+    owner:string
+    content:string
+    )
+  (deftable posts:{post-schema})
+
   (defun create-account
       ( account-id:string
         keyset:guard
@@ -45,5 +51,6 @@
                 { 'avatar: avatar })))
 
 )
-
+(enforce false "rolling back")
 (create-table accounts)
+(create-table posts)
