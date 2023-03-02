@@ -1,1 +1,1 @@
-(posts.create-account "greg" (read-keyset 'sessionKeyset) "greg.jpg")
+(accounts.create-account "greg" (read-keyset 'sessionKeyset) "greg.jpg")

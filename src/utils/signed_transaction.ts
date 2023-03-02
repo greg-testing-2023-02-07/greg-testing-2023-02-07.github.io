@@ -86,7 +86,7 @@ async function tx(transactionCode: string, sign: boolean): Promise<any> {
            cmd: commandPayload
        }),
        credentials: "include"
-    }).catch((error) => {return (error);});
+    });
     const resp_json = await response.json();
     return resp_json
 }
@@ -102,7 +102,7 @@ function mkPactHash(input: string) {
 
 
 // Thanks to https://stackoverflow.com/questions/10730362/get-cookie-by-name
-function getCookie(name: string): string | undefined {
+export function getCookie(name: string): string | undefined {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop()?.split(';').shift();

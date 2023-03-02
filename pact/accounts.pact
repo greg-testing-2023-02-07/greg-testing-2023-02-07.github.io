@@ -37,6 +37,16 @@
         (update accounts account-id
                 { 'avatar: avatar })))
 
+  (defun like-post
+    ( account-id:string
+      post-id:string )
+    (with-capability (SESSION account-id)
+      (format "{} liked post {}" [account-id, post-id])))
+
+  (defun get-account
+    ( account-id:string )
+    (read accounts account-id))
+
 )
 
 (create-table accounts)
