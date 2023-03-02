@@ -8,6 +8,7 @@
 
   (deftable accounts:{account-schema})
 
+
   (defun create-account
       ( account-id:string
         keyset:guard
@@ -47,6 +48,28 @@
     ( account-id:string )
     (read accounts account-id))
 
+  (defschema pictures-schema
+    picture-id:string
+    account-id:string
+    src:string
+    )
+
+  (deftable pictures:{pictures-schema})
+
+  (defun create-picture
+    (account-id:string id:string src:string)
+    (insert pictures id
+      { 'picture-id: id
+      , 'account-id: account-id
+      , 'src: src
+      }))
+
+   (defun get-pictures
+     (account-id:string)
+     (select pictures (where 'account-id (= account-id))))
+
 )
 
-(create-table accounts)
+;; (create-table accounts)
+;; (create-table pictures)
+(accounts.get-pictures "greg")

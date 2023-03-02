@@ -2,12 +2,17 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
+import { useState } from 'react';
 
 import SigninRegister from '../components/SigninRegister';
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
+  const [user, setUser] = useState(null);
+  const [picturesOwner, setPicturesOwner] = useState(null);
+
   return (
     <>
       <Head>
@@ -19,6 +24,7 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.description}>
           <SigninRegister/>
+
         </div>
 
         <div className={styles.center}>
