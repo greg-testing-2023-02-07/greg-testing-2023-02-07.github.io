@@ -44,7 +44,7 @@ export default function SigninRegister(props : any) {
                       props.setUser(accountNameRes);
                       // TODO: This will fail for fresh installs of pact-server, when the
                       // posts module has not not yet been installed.
-                      let res = await tx("(posts.create-account {accountName} (read-keyset \"sessionKeyset\" \"tmp.jpg\"))", false);
+                      let res = await tx("(accounts.create-account {accountName} (read-keyset \"sessionKeyset\" \"tmp.jpg\"))", false);
                     }}>Sign In</a>
                   </div>
               </div>
