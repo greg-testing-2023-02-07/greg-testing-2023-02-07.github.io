@@ -3,79 +3,71 @@ import React, { ChangeEvent, MouseEvent } from 'react';
 import {get, create} from '../utils/webauthn-json.js';
 import { tx } from "../utils/signed_transaction";
 import { pact_server_url } from '../utils/globals';
+import {useState} from 'react';
 
 // TODO: At construction time, check for the auth-token in the cookie,
 // since that should start us out in the logged-in state.
 
-interface LoginState {
-    loggedInAccount?: string;
-    loggedInPublicKey?: string;
-    accountNameForm: string;
-}
+// interface LoginState {
+//     loggedInAccount?: string;
+//     loggedInPublicKey?: string;
+//     accountNameForm: string;
+// }
 
-export default class SigninRegister extends React.Component<{}, LoginState> {
+export default function SigninRegister(props : any) {
 
-    constructor(props: {accountName: string}) {
-        super(props);
-        this.state = { loggedInAccount: undefined, loggedInPublicKey: undefined, accountNameForm: "" };
-        this.handleInputChange = this.handleInputChange.bind(this);
-    }
+  const [user, setUser] =
+    useState<{loggedInAccount: string | undefined, loggedInPublicKey: string | undefined}>(
+      {loggedInAccount: undefined, loggedInPublicKey: undefined}
+    );
+  const [accountName, setAccountName] = useState<string>("");
 
-    handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-        const target = event.target;
-        const value = target.value;
-        this.setState({ accountNameForm: value });
-    }
 
-    async handleRegister(event: MouseEvent<HTMLAnchorElement>) {
-        event.preventDefault();
-        const {accountName, pubKey} = await register(this.state.accountNameForm);
-        this.setState({ loggedInAccount: accountName, loggedInPublicKey: pubKey });
-
-        // TODO: This will fail for fresh installs of pact-server, when the
-        // posts module has not not yet been installed.
-        let res = await tx("(posts.create-account {accountName} (read-keyset \"sessionKeyset\" \"tmp.jpg\"))", false);
-        console.log(res);
-    }
-
-    async handleLogin(event: MouseEvent<HTMLAnchorElement>) {
-        event.preventDefault();
-        const {accountName, pubKey} = await login(this.state.accountNameForm);
-        this.setState({ loggedInAccount: accountName, loggedInPublicKey: pubKey });
-    }
-
-    async handleLogout(event: any) {
-        this.setState({ loggedInAccount: undefined, loggedInPublicKey: undefined});
-        const res = await fetch(pact_server_url + "/api/v1/auth/logout", { credentials: "include" });
-        if (!res.ok) {
-            throw new Error(await res.text());
-        }
-    }
-
-    render() {
       return(
           <>
-              <div className="flex-col" hidden={this.state.loggedInAccount? true : false}>
+              <div className="flex-col" hidden={user.loggedInAccount? true : false}>
                   <div>
-                      <input type="text" onChange={this.handleInputChange}/>
+                    <input type="text" onChange={(e) => setAccountName(e.target.value)}/>
                   </div>
                   <div className="flex flex-row text-xs items-center">
-                    <a href="" onClick={async (e) => {this.handleRegister(e)}}>Register</a>
+                    <a href="" onClick={async (e) => {
+                      e.preventDefault();
+                      const {accountNameRes, pubKeyRes} = await register(accountName);
+                      setUser({ loggedInAccount: accountNameRes, loggedInPublicKey: pubKeyRes });
+                      props.setUser(accountNameRes);
+                    }}>Register</a>
                     <span>/</span>
-                    <a href="" onClick={async (e) => {this.handleLogin(e)}}>Sign In</a>
+                    <a href="" onClick={async (e) => {
+                      e.preventDefault();
+                      const {accountNameRes, pubKeyRes} = await login(accountName);
+                      setUser({ loggedInAccount: accountNameRes, loggedInPublicKey: pubKeyRes });
+                      props.setUser(accountNameRes);
+                      // TODO: This will fail for fresh installs of pact-server, when the
+                      // posts module has not not yet been installed.
+                      let res = await tx("(posts.create-account {accountName} (read-keyset \"sessionKeyset\" \"tmp.jpg\"))", false);
+                    }}>Sign In</a>
                   </div>
               </div>
-              <div className="flex-col" hidden={this.state.loggedInAccount? false: true}>
-                  <p>{this.state.loggedInAccount}</p>
-                  <p className="text-ellipsis">{this.state.loggedInPublicKey}</p>
-                  <a href="" onClick={async (e) => {this.handleLogout(e)}}>Logout</a>
+              <div className="flex-col" hidden={user.loggedInAccount? false: true}>
+                  <p>{user.loggedInAccount}</p>
+                  <p className="text-ellipsis">{user.loggedInPublicKey}</p>
+                  <a href="" onClick={async (e) => {
+                    await handleLogout(e);
+                    setUser({loggedInAccount: undefined, loggedInPublicKey: undefined});
+                  }}>Logout</a>
               </div>
           </>
       )
+}
+
+async function handleLogout(event: any) {
+    const res = await fetch(pact_server_url + "/api/v1/auth/logout", { credentials: "include" });
+    if (!res.ok) {
+        throw new Error(await res.text());
     }
 }
 
-async function register(accountName: string): Promise<{accountName: string, pubKey: string}> {
+async function register(accountName: string): Promise<{accountNameRes: string, pubKeyRes: string}> {
 
   const response = await fetch(pact_server_url + `/api/v1/auth/register/begin`, {
     method: "POST",
@@ -90,7 +82,6 @@ async function register(accountName: string): Promise<{accountName: string, pubK
   });
 
   if (! response.ok) {
-    alert(await response.text());
       throw new Error(await response.text());
   }
   const jsonResponse = await response.json();
@@ -106,7 +97,6 @@ async function register(accountName: string): Promise<{accountName: string, pubK
     body: JSON.stringify(credential),
   });
   if (! response2.ok) {
-    alert(await response2.text())
       throw new Error(await response.text())
   }
   const jsonResponse2 = await response2.json();
@@ -115,10 +105,10 @@ async function register(accountName: string): Promise<{accountName: string, pubK
     console.log("Set cookie");
     const accountInfo = await setup_account_cookies();
 
-  return {accountName: accountInfo.accountName, pubKey: accountInfo.pubKey}
+  return {accountNameRes: accountInfo.accountName, pubKeyRes: accountInfo.pubKey}
 }
 
-async function login(accountName: string): Promise<{accountName: string, pubKey: string}> {
+async function login(accountName: string): Promise<{accountNameRes: string, pubKeyRes: string}> {
     console.log("login");
 
   const response = await fetch(pact_server_url + `/api/v1/auth/login/begin`, {
@@ -129,7 +119,6 @@ async function login(accountName: string): Promise<{accountName: string, pubKey:
   });
 
   if (! response.ok) {
-    alert(await response.text())
       throw new Error(await response.text())
   }
   const jsonResponse = await response.json();
@@ -148,7 +137,6 @@ async function login(accountName: string): Promise<{accountName: string, pubKey:
   });
 
   if (! response2.ok) {
-    alert(await response2.text())
       throw new Error(await response2.text())
   }
   const jsonResponse2 = await response2.json()
@@ -156,19 +144,17 @@ async function login(accountName: string): Promise<{accountName: string, pubKey:
   document.cookie = "credentialId=" + credential.id;
     console.log("Login Set cookie");
   const accountInfo = await setup_account_cookies();
-  return { accountName: accountInfo.accountName, pubKey: accountInfo.pubKey }
+  return { accountNameRes: accountInfo.accountName, pubKeyRes: accountInfo.pubKey }
 }
 
 async function setup_account_cookies(): Promise<{accountName: string, pubKey: string}> {
   console.log("setup_account_cookies");
   const res = await fetch(pact_server_url + "/api/v1/auth/account-info", { credentials: "include" });
   if (!res.ok) {
-    alert( await res.text() )
       throw new Error(await res.text())
   }
   const accountInfo: any = await res.json();
   const publicKey = accountInfo["publicKeyHex"];
-  alert(publicKey);
   console.log("setting public-key cookie to " + publicKey);
   document.cookie = "public-key=" + publicKey;
   console.log("setting account-name cookie to " + accountInfo["accountName"]);
