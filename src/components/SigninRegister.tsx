@@ -35,6 +35,7 @@ export default function SigninRegister(props : any) {
                       const {accountNameRes, pubKeyRes} = await register(accountName);
                       setUser({ loggedInAccount: accountNameRes, loggedInPublicKey: pubKeyRes });
                       props.setUser(accountNameRes);
+                      await tx("(accounts.create-account {accountName} (read-keyset \"sessionKeyset\" \"tmp.jpg\"))", false);
                     }}>Register</a>
                     <span>/</span>
                     <a href="" onClick={async (e) => {
@@ -44,7 +45,6 @@ export default function SigninRegister(props : any) {
                       props.setUser(accountNameRes);
                       // TODO: This will fail for fresh installs of pact-server, when the
                       // posts module has not not yet been installed.
-                      let res = await tx("(accounts.create-account {accountName} (read-keyset \"sessionKeyset\" \"tmp.jpg\"))", false);
                     }}>Sign In</a>
                   </div>
               </div>
