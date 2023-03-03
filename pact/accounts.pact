@@ -70,6 +70,6 @@
 
 )
 
-;; (create-table accounts)
-;; (create-table pictures)
+(create-table accounts)
+(create-table pictures)
 (accounts.get-pictures "greg")

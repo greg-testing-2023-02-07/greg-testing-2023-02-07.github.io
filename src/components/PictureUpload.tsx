@@ -4,9 +4,9 @@ import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 import {encode} from 'base64-arraybuffer';
 import {tx} from '../utils/signed_transaction';
 
-export default function PictureUpload(props: {accountName: string}) {
+export default function PictureUpload(props: {accountName: string, pictures: any, setPictures: any}) {
 
-    let [isOpen,setIsOpen] = useState(true);
+    let [isOpen,setIsOpen] = useState(false);
     let [fileSrc, setFileSrc] = useState<string | ArrayBuffer | null>(null);
     let [canUpload, setCanUpload] = useState<boolean>(false);
 
@@ -33,8 +33,11 @@ export default function PictureUpload(props: {accountName: string}) {
         self.crypto.getRandomValues(nonce);
 
         let pictureId = encode(nonce);
-        const res = await tx(`(accounts.create-picture \"${props.accountName}\" \"${pictureId}\" \"${fileSrc}\")`, false);
-        console.log(await res.json());
+        await tx(`(accounts.create-picture \"${props.accountName}\" \"${pictureId}\" \"${fileSrc}\")`, false)
+            .then((_) => {
+                const picture = { id: pictureId, src: fileSrc };
+                props.setPictures([picture, ...props.pictures]);
+            });
 
     }
 
