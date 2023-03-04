@@ -35,7 +35,7 @@ export default function SigninRegister(props : any) {
                       const {accountNameRes, pubKeyRes} = await register(accountName);
                       setUser({ loggedInAccount: accountNameRes, loggedInPublicKey: pubKeyRes });
                       props.setUser(accountNameRes);
-                      await tx("(accounts.create-account {accountName} (read-keyset \"sessionKeyset\" \"tmp.jpg\"))", false);
+                      await tx(`(accounts.create-account \"${accountNameRes}\" (read-keyset \"sessionKeyset\") \"tmp.jpg\")`, false);
                     }}>Register</a>
                     <span>/</span>
                     <a href="" onClick={async (e) => {

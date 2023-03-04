@@ -15,6 +15,7 @@ import SigninRegister from '../components/SigninRegister';
 import PictureGrid from '../components/PictureGrid';
 import PictureUpload from '../components/PictureUpload';
 import TitleBar from '../components/TitleBar';
+import UserListing from '../components/UserListing';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,10 +23,12 @@ export default function Home() {
 
   const [user, setUser] = useState<string | undefined>(undefined);
   const [pictures, setPictures] = useState([]);
-  const [picturesOwner, setPicturesOwner] = useState(null);
+  const [picturesOwner, setPicturesOwner] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    setUser(getCookie("account-name"));
+    let user = getCookie("account-name");
+    setUser(user);
+    setPicturesOwner(user);
   }, []);
 
   return (
@@ -38,11 +41,11 @@ export default function Home() {
       </Head>
       <TitleBar user={user} setUser={setUser}/>
       <main className={styles.main}>
-
         { user &&
-          <div>
+          <div className="w-full">
+            <UserListing user={user} picturesOwner={picturesOwner} setPicturesOwner={setPicturesOwner}/>
             <PictureUpload accountName={user} pictures={pictures} setPictures={setPictures}/>
-            <PictureGrid accountName={user} pictures={pictures} setPictures={setPictures}/>
+            <PictureGrid accountName={picturesOwner} pictures={pictures} setPictures={setPictures} user={user}/>
           </div>
         }
 

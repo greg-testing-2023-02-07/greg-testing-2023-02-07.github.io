@@ -22,7 +22,31 @@ export default function PictureUpload(props: {accountName: string, pictures: any
         console.log(file);
         const reader = new FileReader();
         reader.onloadend = () => {
-            setFileSrc(reader.result);
+            var img = document.createElement("img");
+            img.onload = function (event) {
+
+                // Scale the image down to be < 320x240.
+                const maxHeight = 240;
+                const maxWidth = 320;
+                const xScale = maxWidth / img.width;
+                console.log("xScale: " + xScale);
+                const yScale = maxHeight / img.height;
+                console.log("yScale: " + yScale);
+                const scale = (xScale < 1.0 || yScale < 1.0) ? Math.min(xScale,yScale) : 1.0;
+                console.log("scale: " + scale);
+
+                var canvas = document.createElement("canvas");
+                canvas.height = img.height * scale;
+                canvas.width = img.width * scale;
+                var ctx = canvas.getContext("2d");
+                ctx?.drawImage(img,0,0,img.width * scale,img.height * scale);
+                var dataurl = canvas.toDataURL(file.type);
+                setFileSrc(dataurl);
+            }
+            if (reader.result) {
+                img.src = reader.result.toString();
+            }
+            // setFileSrc(reader.result);
             setCanUpload(true);
         }
         reader.readAsDataURL(file);
@@ -35,7 +59,7 @@ export default function PictureUpload(props: {accountName: string, pictures: any
         let pictureId = encode(nonce);
         await tx(`(accounts.create-picture \"${props.accountName}\" \"${pictureId}\" \"${fileSrc}\")`, false)
             .then((_) => {
-                const picture = { id: pictureId, src: fileSrc };
+                const picture = { id: pictureId, "picture-id": pictureId, src: fileSrc };
                 props.setPictures([picture, ...props.pictures]);
             });
 

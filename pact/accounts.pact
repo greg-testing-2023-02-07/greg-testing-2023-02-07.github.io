@@ -19,6 +19,9 @@
             , 'avatar: avatar
             }))
 
+  (defun list-accounts ()
+    (keys accounts))
+
   (defcap SESSION
       ( account-id:string )
     (with-read accounts account-id
@@ -52,6 +55,7 @@
     picture-id:string
     account-id:string
     src:string
+    likes:[string]
     )
 
   (deftable pictures:{pictures-schema})
@@ -62,11 +66,29 @@
       { 'picture-id: id
       , 'account-id: account-id
       , 'src: src
+      , 'likes: []
       }))
 
    (defun get-pictures
      (account-id:string)
      (select pictures (where 'account-id (= account-id))))
+
+   (defun like-picture (account-id:string picture-id:string)
+     (with-read pictures picture-id
+       { "likes" := old-likes,
+         "account-id" := account-id,
+         "picture-id" := picture-id,
+         "src" := src
+       }
+       (enforce (not (contains account-id old-likes)) "Already liked")
+       (update pictures picture-id
+         { "likes": (+ [account-id] old-likes),
+           "account-id": account-id,
+           "picture-id": picture-id,
+           "src": src
+         })
+     )
+   )
 
 )
 
