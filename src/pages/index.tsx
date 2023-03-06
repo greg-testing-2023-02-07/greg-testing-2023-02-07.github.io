@@ -39,18 +39,20 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <TitleBar user={user} setUser={setUser}/>
-      <main className={styles.main}>
-        { user &&
-          <div className="w-full">
-            <UserListing user={user} picturesOwner={picturesOwner} setPicturesOwner={setPicturesOwner}/>
-            <PictureUpload accountName={user} pictures={pictures} setPictures={setPictures}/>
-            <PictureGrid accountName={picturesOwner} pictures={pictures} setPictures={setPictures} user={user}/>
-          </div>
-        }
+      <div className="h-screen dark:bg-slate-600">
+        <TitleBar user={user} setUser={setUser}/>
+        <main className="flex flex-column justify-between align-center p-6 w-full">
+          { user &&
+            <div className="w-full">
+              <UserListing user={user} picturesOwner={picturesOwner} setPicturesOwner={setPicturesOwner}/>
+              <PictureUpload accountName={user} pictures={pictures} setPictures={setPictures}/>
+              <PictureGrid accountName={picturesOwner} pictures={pictures} setPictures={setPictures} user={user}/>
+            </div>
+          }
 
 
-      </main>
+        </main>
+      </div>
     </>
   )
 }

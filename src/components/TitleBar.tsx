@@ -10,7 +10,7 @@ import SigninRegister from '../components/SigninRegister';
 export default function TitleBar(props: any) {
     return(
         <>
-            <header className="flex items-center justify-between px-4 py-2 bg-white shadow-sm">
+            <header className="flex items-center justify-between px-4 py-2 bg-white dark:bg-slate-800 shadow-sm">
                 <div className="flex items-center">
                     <FontAwesomeIcon icon={faCameraRetro}/>
                     PactPics
