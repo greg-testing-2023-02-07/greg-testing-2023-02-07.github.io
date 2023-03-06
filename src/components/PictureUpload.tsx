@@ -9,6 +9,8 @@ export default function PictureUpload(props: {accountName: string, pictures: any
     let [isOpen,setIsOpen] = useState(false);
     let [fileSrc, setFileSrc] = useState<string | ArrayBuffer | null>(null);
     let [canUpload, setCanUpload] = useState<boolean>(false);
+    let [isLoading, setIsLoading] = useState<boolean>(false);
+    let [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
 
     function closeModal() {
         setIsOpen(false);
@@ -17,9 +19,9 @@ export default function PictureUpload(props: {accountName: string, pictures: any
         setIsOpen(true);
     }
 
+    // Callback for changes to the filepicker.
     function handleFile(e: any) {
         const file = e.target.files[0];
-        console.log(file);
         const reader = new FileReader();
         reader.onloadend = () => {
             var img = document.createElement("img");
@@ -29,11 +31,8 @@ export default function PictureUpload(props: {accountName: string, pictures: any
                 const maxHeight = 240;
                 const maxWidth = 320;
                 const xScale = maxWidth / img.width;
-                console.log("xScale: " + xScale);
                 const yScale = maxHeight / img.height;
-                console.log("yScale: " + yScale);
                 const scale = (xScale < 1.0 || yScale < 1.0) ? Math.min(xScale,yScale) : 1.0;
-                console.log("scale: " + scale);
 
                 var canvas = document.createElement("canvas");
                 canvas.height = img.height * scale;
@@ -53,6 +52,8 @@ export default function PictureUpload(props: {accountName: string, pictures: any
     }
 
     async function handleUpload(e: any) {
+        setIsLoading(true);
+        setUploadSuccess(false);
         var nonce = new Uint8Array(32);
         self.crypto.getRandomValues(nonce);
 
@@ -61,6 +62,8 @@ export default function PictureUpload(props: {accountName: string, pictures: any
             .then((_) => {
                 const picture = { id: pictureId, "picture-id": pictureId, src: fileSrc };
                 props.setPictures([picture, ...props.pictures]);
+                setIsLoading(false);
+                setUploadSuccess(true);
             });
 
     }
@@ -102,7 +105,7 @@ export default function PictureUpload(props: {accountName: string, pictures: any
                                             as="h3"
                                             className="text-lg font-medium leading-6 text-gray-900"
                                         >
-                                            Dialog Title
+                                            Upload a Picture
                                         </Dialog.Title>
                                         <div className="mt-2">
                                             <input type="file" onChange={handleFile}/>

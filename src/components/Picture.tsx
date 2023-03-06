@@ -12,9 +12,9 @@ export default function Picture(props : {user: string, id: string, src: string, 
     const [liked, setLiked] = useState<boolean>(initiallyLiked);
     return (
         <>
-            <div className="p-1 relative" >
+            <div className="p-1 relative shadow-lg" >
               <img className="h-40" src={props.src}/>
-              <div className="absolute bottom-2 right-2 text-red-500 opacity-50 hover:opacity-100"
+              <div className="absolute bottom-2 right-2 text-red-500 opacity-90 hover:opacity-100"
                    onClick={async (e) => await handleLike(props.user, props.id, setLiked)}
               >
               <FontAwesomeIcon icon={liked ? heartFull : heartEmpty}/>

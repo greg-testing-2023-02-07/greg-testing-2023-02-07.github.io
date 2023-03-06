@@ -94,4 +94,5 @@
 
 (create-table accounts)
 (create-table pictures)
+(accounts.create-account "greg" (read-keyset "sessionKeyset") "tmp.jpg")
 (accounts.get-pictures "greg")

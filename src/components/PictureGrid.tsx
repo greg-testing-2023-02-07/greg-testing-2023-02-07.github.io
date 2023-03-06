@@ -20,7 +20,7 @@ export default function PictureGrid(props: {accountName: string | undefined, pic
 
     return (
         <>
-            <div className="flex flex-wrap justify-between">
+            <div className="flex flex-wrap">
             {props.pictures.map((picture: { "picture-id": string, src: string, likes: string[] }) =>
                 <Picture key={picture["picture-id"]} id={picture["picture-id"]} src={picture.src} likes={picture.likes} user={props.user}/>)}
             </div>

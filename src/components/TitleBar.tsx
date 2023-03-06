@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { regular } from '@fortawesome/fontawesome-svg-core/import.macro';
+import { faCameraRetro } from '@fortawesome/free-solid-svg-icons';
 import { faFileCode } from '@fortawesome/free-regular-svg-icons';
 import Link from 'next/link';
 import { pact_server_url } from '../utils/globals';
@@ -9,8 +10,9 @@ import SigninRegister from '../components/SigninRegister';
 export default function TitleBar(props: any) {
     return(
         <>
-            <header className="flex items-center justify-between px-4 py-2 bg-blue-100">
+            <header className="flex items-center justify-between px-4 py-2 bg-white shadow-sm">
                 <div className="flex items-center">
+                    <FontAwesomeIcon icon={faCameraRetro}/>
                     PactPics
                 </div>
                 { props.user ?
